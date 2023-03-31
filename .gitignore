@@ -1,9 +1,17 @@
+
+
+
+#Terraform#######################################################################################
 # Local .terraform directories
 **/.terraform/*
 
 # .tfstate files
 *.tfstate
 *.tfstate.*
+
+# sensitive variables
+*.tfvars
+variables.tf
 
 # Crash log files
 crash.log
