@@ -124,7 +124,6 @@ def etl_web_to_bq(year: int, month: int, color: str, func: int) -> None:
     # dataset_url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{dataset_file}.csv.gz"
     dataset_url = f"https://d37ci6vzurychx.cloudfront.net/trip-data/{dataset_file}.parquet"
     
-
     # web to gcs
     if func == 0:
         df = fetch(dataset_url)
@@ -144,14 +143,13 @@ def etl_parent_w2bq_flow(
     ):
     for month in months:
         etl_web_to_bq(year, month, color, func)
-        if func ==2:
-            break
+
 
 if __name__ == "__main__":
     color = "yellow"
-    months = [1]
-    # months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-    year = 2020 # 2019 & 2022
+    # months = [1]
+    months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    year = 2019 # 2019 & 2022
     # func = 0(web to gcs) / 1(gcs to bq)
     func = 0
     etl_parent_w2bq_flow(months, year, color, func)
