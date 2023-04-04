@@ -36,3 +36,12 @@ models:
     # Applies to all files under models/example/
     example:
       materialized: view
+
+vars:
+  gender_type_values: [0, 1, 2]
+
+seeds:
+  nyc_taxi_data:
+      taxi_zone_lookup:
+          +column_types:
+              locationid: numeric
