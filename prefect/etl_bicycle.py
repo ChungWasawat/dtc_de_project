@@ -32,6 +32,7 @@ def fetch(dataset_url: str) -> pd.DataFrame:
     return df
 
 
+#dbt
 def changeGender(num:int) -> str:
     if num == 0:
         return "unknown"
@@ -45,8 +46,6 @@ def changeGender(num:int) -> str:
 def clean(df: pd.DataFrame) -> pd.DataFrame:
     df['starttime'] = pd.to_datetime(df['starttime'])
     df['stoptime'] = pd.to_datetime(df['stoptime'])
-    
-    df['gender'] = df['gender'].apply(changeGender)
 
     print(df.head(2))
     print(f"columns: {df.dtypes}")
