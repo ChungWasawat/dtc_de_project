@@ -101,11 +101,11 @@ def write_bq_table(df: pd.DataFrame, colour: str) -> None:
 
     gcp_credentials_block = GcpCredentials.load("dtcde-prefect-gcp-creds")
     if colour == "yellow":
-        dest_table = "project_all_dataset.yellow"
+        dest_table = "project_all_dataset.taxi_yellow"
     elif colour == "green":
-        dest_table = "project_all_dataset.green"
+        dest_table = "project_all_dataset.taxi_green"
     elif colour == "fhv":
-        dest_table = "project_all_dataset.fhv"
+        dest_table = "project_all_dataset.taxi_fhv"
 
     df.to_gbq(
         destination_table=dest_table,

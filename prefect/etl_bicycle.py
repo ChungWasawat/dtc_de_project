@@ -47,6 +47,12 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
     df['starttime'] = pd.to_datetime(df['starttime'])
     df['stoptime'] = pd.to_datetime(df['stoptime'])
 
+    df.rename(columns={"start station id": "start_station_id", "start station name": "start_station_name", \
+                       "start station latitude": "start_station_latitude", "start station longitude": "start_station_longitude", \
+                        "end station id": "end_station_id", "end station name": "end_station_name", \
+                        "end station latitude": "end_station_latitude", "end station longitude": "end_station_longitude", \
+                        "birth year": "birth_year"})
+
     print(df.head(2))
     print(f"columns: {df.dtypes}")
     print(f"rows: {len(df)}")

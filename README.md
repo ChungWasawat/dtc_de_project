@@ -4,6 +4,8 @@
 
 ## Objective: 
 
-
+## Data Sources:
+https://citibikenyc.com/system-data
+https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
 
 
