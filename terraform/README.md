@@ -24,3 +24,4 @@
     * ```terraform plan``` : Check changes to new infra plan
     * ```terraform apply``` : Create new infra
     * ```terraform destroy``` : Delete infra after your work
+
