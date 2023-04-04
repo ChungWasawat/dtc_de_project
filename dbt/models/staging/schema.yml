@@ -58,11 +58,11 @@ models:
         description: >
             The final rate code in effect at the end of the trip.
               1= Standard rate
-              2=JFK
-              3=Newark
-              4=Nassau or Westchester
-              5=Negotiated fare
-              6=Group ride
+              2= JFK
+              3= Newark
+              4= Nassau or Westchester
+              5= Negotiated fare
+              6= Group ride
       - name: Store_and_fwd_flag 
         description: > 
           This flag indicates whether the trip record was held in vehicle
@@ -140,16 +140,19 @@ models:
       - name: bikeid
         description: bike identity number
       - name: usertype
-        description: 
+        description: >
+          To show a type of the user
+            Customer = 24-hour pass or 3-day pass user
+            Subscriber = Annual Member
       - name: birth_year
-        description: 
+        description: A birth year of user
       - name: gender 
         description: A numeric code representing the gender of user
         tests: 
           - accepted_values:
-            values: "{{ var('gender_type_values') }}"
-            severity: warn
-            quote: false
+              values: "{{ var('gender_type_values') }}"
+              severity: warn
+              quote: false
       - name: gender_type_description
         description: Description of the gender_type code
 
