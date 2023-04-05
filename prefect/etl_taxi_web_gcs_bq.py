@@ -61,7 +61,7 @@ def write_local(df: pd.DataFrame, color: str, dataset_file: str) -> Path:
     path3 = Path(f"D:\data\{color}\{dataset_file}.parquet")
 
     df.to_parquet(path3, compression="gzip")
-    return path2
+    return path3
 
 
 @task()
@@ -155,4 +155,4 @@ if __name__ == "__main__":
     year = 2019 # 2019 & 2022
     # func = 0(web to gcs) / 1(gcs to bq)
     func = 0
-    etl_parent_w2bq_flow(months, year, color, func)
+    etl_parent_w2bq_taxi_flow(months, year, color, func)
