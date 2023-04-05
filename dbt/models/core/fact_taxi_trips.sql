@@ -27,6 +27,7 @@ select
     dropoff_zone.zone as dropoff_zone,
     trips_yellow.pickup_datetime,
     trips_yellow.dropoff_datetime,
+    {{ dbt.datediff("trips_yellow.pickup_datetime", "trips_yellow.dropoff_datetime", "second") }} as trip_duration_sec,
     trips_yellow.store_and_fwd_flag,
     trips_yellow.passenger_count,
     trips_yellow.trip_distance,
