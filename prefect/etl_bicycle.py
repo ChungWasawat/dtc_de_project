@@ -66,7 +66,10 @@ def write_local(df: pd.DataFrame, dataset_file: str) -> Path:
     path = Path(f"data/project/{dataset_file}.parquet")
     path2 = local_path / path
 
-    df.to_parquet(path2, compression="gzip")
+    #for windows
+    path3 = Path(f"D:\data\project\{dataset_file}.parquet")
+
+    df.to_parquet(path3, compression="gzip")
     return path2
 
 
@@ -140,7 +143,7 @@ def etl_web_to_bq(year: int, month: int, func: int) -> None:
 
 
 @flow()
-def etl_parent_w2bq_flow(
+def etl_parent_w2bq_bike_flow(
     months: list[int] = [1, 2], year: int = 2021, func: int = 0
     ):
     for month in months:

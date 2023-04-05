@@ -1,0 +1,64 @@
+###
+### A complete description of a Prefect Deployment for flow 'etl-parent-w2bq-taxi-flow'
+###
+name: taxi_ETL
+description: null
+version: c199890504c927d1c9ce08ff1e6f06c4
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+tags: []
+parameters: {}
+schedule: null
+infra_overrides: {}
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: etl-parent-w2bq-taxi-flow
+manifest_path: null
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  _block_document_id: a9aa2548-284b-49fb-8aae-106632edc8e4
+  _block_document_name: anonymous-255846ff-d5db-449b-8ef3-bab533f53e9e
+  _is_anonymous: true
+  block_type_slug: process
+  _block_type_slug: process
+storage: null
+path: D:\DEproject\dtc_de_project\prefect
+entrypoint: etl_taxi_web_gcs_bq.py:etl_parent_w2bq_taxi_flow
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    months:
+      title: months
+      default:
+      - 1
+      - 2
+      position: 0
+      type: array
+      items:
+        type: integer
+    year:
+      title: year
+      default: 2021
+      position: 1
+      type: integer
+    color:
+      title: color
+      default: yellow
+      position: 2
+      type: string
+    func:
+      title: func
+      default: 0
+      position: 3
+      type: integer
+  required: null
+  definitions: null

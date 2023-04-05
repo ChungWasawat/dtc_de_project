@@ -1,0 +1,59 @@
+###
+### A complete description of a Prefect Deployment for flow 'etl-parent-w2bq-bike-flow'
+###
+name: bike_ETL
+description: null
+version: 0cabbf636e2afb35e259e5bb52ec612f
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+tags: []
+parameters: {}
+schedule: null
+infra_overrides: {}
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: etl-parent-w2bq-bike-flow
+manifest_path: null
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  _block_document_id: 4d4c58e4-a931-405b-9391-f015e17d45d2
+  _block_document_name: anonymous-53a3e43a-aa3b-4a54-a813-a9dcb346e92f
+  _is_anonymous: true
+  block_type_slug: process
+  _block_type_slug: process
+storage: null
+path: D:\DEproject\dtc_de_project\prefect
+entrypoint: etl_bicycle.py:etl_parent_w2bq_bike_flow
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    months:
+      title: months
+      default:
+      - 1
+      - 2
+      position: 0
+      type: array
+      items:
+        type: integer
+    year:
+      title: year
+      default: 2021
+      position: 1
+      type: integer
+    func:
+      title: func
+      default: 0
+      position: 2
+      type: integer
+  required: null
+  definitions: null
