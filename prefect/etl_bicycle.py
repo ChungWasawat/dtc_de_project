@@ -1,4 +1,6 @@
 from pathlib import Path
+import requests, zipfile
+from io import BytesIO
 import pandas as pd
 from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
@@ -9,26 +11,18 @@ from datetime import timedelta
 from prefect_gcp.bigquery import BigQueryWarehouse
 
 
-"""
-df['starttime'] = pd.to_datetime(df['starttime'])
-df['stoptime'] = pd.to_datetime(df['stoptime'])
-
-
-def changeGender(num:int) -> str:
-    if num == 0:
-        return "unknown"
-    elif num == 1:
-        return "male"
-    elif num == 2:
-        return "female"
-
-df['gender'] = df['gender'].apply(changeGender)
-"""
-
 ## load csv file from web to gbucket
 @task(retries=3, cache_key_fn=task_input_hash, cache_expiration=timedelta(days=1))
-def fetch(dataset_url: str) -> pd.DataFrame:
-    df = pd.read_csv(dataset_url, compression='zip')
+def fetch(dataset_url: str, file_name: str) -> pd.DataFrame:
+    print("Downloading zip file started")
+    req = requests.get(dataset_url)
+    # local_path = f"D:\data\project\{file_name}.csv.zip"
+    # with open(local_path,'wb') as output_file:
+    #   output_file.write(req.content)
+    buffer1 = BytesIO(req.content)
+    print("Downloading zip file completed")
+    zip_data = zipfile.ZipFile(buffer1, "r")
+    df = pd.read_csv(zip_data.open(f'{file_name}.csv'))
     return df
 
 
@@ -70,7 +64,7 @@ def write_local(df: pd.DataFrame, dataset_file: str) -> Path:
     path3 = Path(f"D:\data\project\{dataset_file}.parquet")
 
     df.to_parquet(path3, compression="gzip")
-    return path2
+    return path3
 
 
 @task()
@@ -131,7 +125,7 @@ def etl_web_to_bq(year: int, month: int, func: int) -> None:
 
     # web to gcs
     if func == 0:
-        df = fetch(dataset_url)
+        df = fetch(dataset_url, dataset_file)
         df_clean = clean(df)
         path = write_local(df_clean, dataset_file)
         write_gcs(path, dataset_file)
@@ -144,7 +138,7 @@ def etl_web_to_bq(year: int, month: int, func: int) -> None:
 
 @flow()
 def etl_parent_w2bq_bike_flow(
-    months: list[int] = [1, 2], year: int = 2021, func: int = 0
+    months: list[int] = [1, 2], year: int = 2019, func: int = 0
     ):
     for month in months:
         etl_web_to_bq(year, month, func)
@@ -156,5 +150,5 @@ if __name__ == "__main__":
     year = 2019 # 2019 & 2022
     # func = 0(web to gcs) / 1(gcs to bq)
     func = 0
-    etl_parent_w2bq_flow(months, year, func)
+    etl_parent_w2bq_bike_flow(months, year, func)
 
