@@ -2,7 +2,9 @@
 
 ## Description:
 
+
 ## Objective: 
+
 
 ## Technologies Used:    
     * Python
@@ -13,8 +15,12 @@
     * DBT
     * Looker Studio
 
-## Data Pipeline
-
+## Data Pipeline:
+    Data sources -> GCS -> BQ -> DBT -> Looker Studio    
+    1. use Terraform to create the resources (GCS, BQ)
+    2. use Prefect and Python to upload data to GCS and BQ
+    3. use DBT to transform data
+    4. use Looker Studio to create dashboards from transformed data
 
 ## Dashboard:
 [Bike and Taxi Usages in New York from 2019 to 2022](https://lookerstudio.google.com/reporting/472c1e2a-cd34-4eb7-b654-6029288189a0)  
