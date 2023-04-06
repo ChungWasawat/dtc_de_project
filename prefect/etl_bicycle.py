@@ -1,7 +1,9 @@
 from pathlib import Path
 import requests, zipfile
 from io import BytesIO
+import re
 import pandas as pd
+import numpy as np
 from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
 from prefect_gcp import GcpCredentials
@@ -13,16 +15,22 @@ from prefect_gcp.bigquery import BigQueryWarehouse
 
 ## load csv file from web to gbucket
 @task(retries=3, cache_key_fn=task_input_hash, cache_expiration=timedelta(days=1))
-def fetch(dataset_url: str, file_name: str) -> pd.DataFrame:
+def fetch(dataset_url: str, file_name: str, year: int, month: int) -> pd.DataFrame:
     print("Downloading zip file started")
-    req = requests.get(dataset_url)
-    # local_path = f"D:\data\project\{file_name}.csv.zip"
-    # with open(local_path,'wb') as output_file:
-    #   output_file.write(req.content)
+    if year == 2022 and (month == 6 or month == 7):
+        file_name = f"{year}{month:02}-citbike-tripdata"
+        req = requests.get(f"https://s3.amazonaws.com/tripdata/{file_name}.csv.zip")
+    else:
+        req = requests.get(dataset_url)
+    #local_path = f"D:\data\project\{file_name}.csv.zip"
+    #with open(local_path,'wb') as output_file:
+    #    output_file.write(req.content)
     buffer1 = BytesIO(req.content)
     print("Downloading zip file completed")
     zip_data = zipfile.ZipFile(buffer1, "r")
+    #zip_data = zipfile.ZipFile(local_path, "r")
     df = pd.read_csv(zip_data.open(f'{file_name}.csv'))
+    zip_data.close()
     return df
 
 
@@ -38,19 +46,47 @@ def changeGender(num:int) -> str:
 
 @task(log_prints=True)
 def clean(df: pd.DataFrame) -> pd.DataFrame:
-    df['starttime'] = pd.to_datetime(df['starttime'])
-    df['stoptime'] = pd.to_datetime(df['stoptime'])
+    col_name = df.columns.values.tolist()
+    print(col_name)
+    # After 2021, data provider changed data format of the data source
+    if "starttime" in col_name:
+        df.rename(columns={"start station id": "start_station_id", "start station name": "start_station_name", \
+                        "start station latitude": "start_station_latitude", "start station longitude": "start_station_longitude", \
+                            "end station id": "end_station_id", "end station name": "end_station_name", \
+                            "end station latitude": "end_station_latitude", "end station longitude": "end_station_longitude", \
+                            "birth year": "birth_year"}, inplace=True)
+        
+        df['bikeid'] = df['bikeid'].astype(str)
 
-    df.rename(columns={"start station id": "start_station_id", "start station name": "start_station_name", \
-                       "start station latitude": "start_station_latitude", "start station longitude": "start_station_longitude", \
-                        "end station id": "end_station_id", "end station name": "end_station_name", \
-                        "end station latitude": "end_station_latitude", "end station longitude": "end_station_longitude", \
-                        "birth year": "birth_year"})
+        df['starttime'] = pd.to_datetime(df['starttime'])
+        df['stoptime'] = pd.to_datetime(df['stoptime'])
+
+        df['start_station_id'].fillna(0, inplace=True)
+        df['end_station_id'].fillna(0, inplace=True)
+        df['start_station_name'].fillna("Unknown", inplace=True)
+        df['end_station_name'].fillna("Unknown", inplace=True)
+
+        df['bikeid'] = 'A' + df['bikeid'].astype(str)
+    
+    else:
+        df.rename(columns={"ride_id": "bikeid", "started_at": "starttime", "ended_at": "stoptime"}, inplace=True) 
+
+        df['bikeid'] = df['bikeid'].astype(str)
+
+        df['start_station_id'].fillna(0, inplace=True)
+        df['end_station_id'].fillna(0, inplace=True)
+        df['start_station_name'].fillna("Unknown", inplace=True)
+        df['end_station_name'].fillna("Unknown", inplace=True)
+
+        df['starttime'] = pd.to_datetime(df['starttime'])
+        df['stoptime'] = pd.to_datetime(df['stoptime'])  
+        df['tripduration'] = ( df['stoptime'] - df['starttime'] ) / np.timedelta64(1,'s')
+        df['tripduration'] = df['tripduration'].astype(int)
 
     print(df.head(2))
     print(f"columns: {df.dtypes}")
     print(f"rows: {len(df)}")
-    return df  
+    return df[["tripduration", "starttime", "stoptime", "start_station_name", "end_station_name", "bikeid" ]]  
 
 
 def write_local(df: pd.DataFrame, dataset_file: str) -> Path:
@@ -91,10 +127,10 @@ def transform(path: Path) -> pd.DataFrame:
     df = pd.read_parquet(path)
 
     print(f"pre: missing trip distance: {df.isnull().sum().sum()}")
-    df['start station id'].fiillna(0, inplace=True)
-    df['start station name'].fiillna(0, inplace=True)
-    df['stop station id'].fiillna(0, inplace=True)
-    df['stop station name'].fiillna(0, inplace=True)
+    df['start_station_id'].fillna(0, inplace=True)
+    df['start_station_name'].fillna(0, inplace=True)
+    df['end_station_id'].fillna(0, inplace=True)
+    df['end_station_name'].fillna(0, inplace=True)
     print(f'post: missing trip distance: {df.isnull().sum().sum()}')
 
     return df
@@ -125,7 +161,7 @@ def etl_web_to_bq(year: int, month: int, func: int) -> None:
 
     # web to gcs
     if func == 0:
-        df = fetch(dataset_url, dataset_file)
+        df = fetch(dataset_url, dataset_file, year, month)
         df_clean = clean(df)
         path = write_local(df_clean, dataset_file)
         write_gcs(path, dataset_file)
@@ -138,7 +174,7 @@ def etl_web_to_bq(year: int, month: int, func: int) -> None:
 
 @flow()
 def etl_parent_w2bq_bike_flow(
-    months: list[int] = [1, 2], year: int = 2019, func: int = 0
+    months: list[int] = [1, 2], year: int = 2021, func: int = 0
     ):
     for month in months:
         etl_web_to_bq(year, month, func)
