@@ -1,7 +1,8 @@
-# Trends of bicycle and taxi usage in NewYork since Covid-19 pandemic started
+# Trends of bicycle and taxi usage in NewYork since the Covid-19 pandemic started
 
 ## Description:
-
+We have faced the Covid-19 pandamic for a while and many countries encouraged their people to stay at their home and only go out if necessary.
+ss
 
 ## Objective: 
 
@@ -18,7 +19,7 @@
 ## Data Pipeline:
     Data sources -> GCS -> BQ -> DBT -> Looker Studio    
     1. use Terraform to create the resources (GCS, BQ)
-    2. use Prefect and Python to upload data to GCS and BQ
+    2. use Prefect and Python to create etl files to upload data to GCS and BQ
     3. use DBT to transform data
     4. use Looker Studio to create dashboards from transformed data
 
