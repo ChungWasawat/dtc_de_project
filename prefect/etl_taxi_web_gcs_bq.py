@@ -33,8 +33,6 @@ def clean(df: pd.DataFrame, colour: str) -> pd.DataFrame:
 
         df["pickup_datetime"] = pd.to_datetime(df["pickup_datetime"])
         df["dropOff_datetime"] = pd.to_datetime(df["dropOff_datetime"])
-
-
     
     if colour == "yellow" or colour == "green":
         df["VendorID"] = df["VendorID"].astype('Int64')
@@ -43,6 +41,7 @@ def clean(df: pd.DataFrame, colour: str) -> pd.DataFrame:
         df["DOLocationID"] = df["DOLocationID"].astype('Int64')
         df["passenger_count"] = df["passenger_count"].astype('Int64')
         df["payment_type"] = df["payment_type"].astype('Int64')
+        df["airport_fee"] = df["airport_fee"].astype('Int64') # fillna?
         
     print(df.head(2))
     print(f"columns: {df.dtypes}")

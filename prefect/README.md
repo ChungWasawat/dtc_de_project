@@ -10,5 +10,8 @@
     * GCS Bucket block : to gain access to a GCS bucket
 5. execute Python file to make the data pipeline run 
     ```python abc.py```
-6. 
-    ```prefect deployment build ./parameterized_flow.py:etl_parent_flow -n "Parameterized ETL"```
+6. can use prefect deployment to re-execute the codes easier
+    ```prefect deployment build ./abc.py:etl_flow -n "deployment name"```   
+    ```prefect deployment apply etl_flow-deployment.yaml```
+7. after that, start work-queue agent
+    ```prefect agent start --work-queue "default"```
