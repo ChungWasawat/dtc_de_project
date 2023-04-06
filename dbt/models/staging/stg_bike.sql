@@ -4,7 +4,7 @@ with tripdata as
 (
   select *,
     row_number() over(partition by bikeid, starttime) as rn
-  from {{ source('staging','bike') }}
+  from {{ source('staging','external_bike') }}
   where bikeid is not null 
 )
 select

@@ -6,8 +6,8 @@ sources:
     schema: project_all_dataset       # -dataset
 
     tables:
-      - name: taxi_yellow
-      - name: bike
+      - name: external_yellow_taxi
+      - name: external_bike
         freshness:
           error_after: {count: 6, period: hour}
 
