@@ -5,7 +5,7 @@ We have faced the Covid-19 pandamic for a while and many countries encouraged th
 This impacted many businesses like airlines or restaurants and they were forced to adapt or close their business.   
 
 
-As I  
+So I am curious about how people's behaviour on taxi and bike usages change since then. 
 
 ## Technologies Used:    
     * Python
