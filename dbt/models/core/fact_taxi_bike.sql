@@ -33,7 +33,7 @@ select
 
     -- Calculation
     count(tripid) as total_monthly_trips,
-    avg(trip_duration_sec)
+    avg(trip_duration_sec) as average_trip_duration
     
 from trips_unioned
 group by 1,2,3

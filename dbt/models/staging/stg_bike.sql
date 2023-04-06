@@ -10,7 +10,7 @@ with tripdata as
 select
    -- identifiers
     {{ dbt_utils.surrogate_key(['bikeid', 'starttime']) }} as tripid,
-    cast(bikeid as integer) as bikeid,
+    cast(bikeid as string) as bikeid,
     cast(start_station_name as string) as start_station_name,
     cast(end_station_name as string) as end_station_name,
     
