@@ -1,9 +1,11 @@
 # Trends of bicycle and taxi usage in NewYork since the Covid-19 pandemic started
 
 ## Description:
-    We have faced the Covid-19 pandamic for a while and many countries encouraged their people to stay at their home and only go out if necessary.
+We have faced the Covid-19 pandamic for a while and many countries encouraged their people to stay at their home and only go out if necessary.
 This impacted many businesses like airlines or restaurants and they were forced to adapt or close their business.   
-    As I  
+
+
+As I  
 
 ## Technologies Used:    
     * Python
