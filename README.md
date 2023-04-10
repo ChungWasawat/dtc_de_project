@@ -18,10 +18,10 @@ So I am curious about how people's behaviour on taxi and bike usages change sinc
 
 ## Data Pipeline:
 ![data workflow](https://github.com/ChungWasawat/dtc_de_project/blob/main/assets/asset1.jpg "Data Pipeline")   
-    1. use Terraform to create the resources (GCS, BQ)
-    2. use Prefect and Python to create etl files to upload data to GCS and BQ
-    3. use DBT to transform data
-    4. use Looker Studio to create dashboards from transformed data
+    1. use Terraform to create the resources (GCS, BQ)   
+    2. use Prefect and Python to create etl files to upload data to GCS and BQ   
+    3. use DBT to transform data   
+    4. use Looker Studio to create dashboards from transformed data   
 
 ## Dashboard:
 
