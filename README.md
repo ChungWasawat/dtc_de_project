@@ -1,11 +1,12 @@
 # Data Engineering Zoomcamp 2023 Project
 
 ## Project Description:
-We have faced the Covid-19 pandamic for a while and many countries encouraged their people to stay at their home and only go out if necessary.
-This impacted many businesses like airlines or restaurants and they were forced to adapt or close their business.   
+We have faced the Covid-19 pandamic for a while and everyone had to stay at home, this created the new normal "work from home".    
+Even though, in many countries, Covid-19 restrictions have lift because most people have vaccinated and the number of patients decreased, some businesses could not restore theirselves to the state they were before the pandemic happened.      
 
 
-So I am curious about how people's behaviour on taxi and bike usages change since then. 
+### Objective 
+
 
 ## Data Sources:
 This project use two datasets: Citi Bike Trip Histories [Bike dataset](https://citibikenyc.com/system-data) and TLC Trip Record Data [Taxi dataset](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).   
