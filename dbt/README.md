@@ -6,3 +6,4 @@ and use the following commands to run the models:
 - dbt run       : to executes compiled sql model files against the current target database
 - dbt test      : to runs tests defined on models, sources, snapshots, and seeds (expect to build models before)
 
+![dbt lineage](https://github.com/ChungWasawat/dtc_de_project/blob/main/assets/asset2.jpg "DBT Lineage of the project")

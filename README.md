@@ -17,13 +17,14 @@ So I am curious about how people's behaviour on taxi and bike usages change sinc
     * Looker Studio
 
 ## Data Pipeline:
-    Data sources -> GCS -> BQ -> DBT -> Looker Studio    
+![data workflow](https://github.com/ChungWasawat/dtc_de_project/blob/main/assets/asset1.jpg "Data Pipeline")   
     1. use Terraform to create the resources (GCS, BQ)
     2. use Prefect and Python to create etl files to upload data to GCS and BQ
     3. use DBT to transform data
     4. use Looker Studio to create dashboards from transformed data
 
 ## Dashboard:
+
 [Bike and Taxi Usages in New York from 2019 to 2022](https://lookerstudio.google.com/reporting/472c1e2a-cd34-4eb7-b654-6029288189a0)  
 
 ## Data Sources:
