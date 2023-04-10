@@ -8,8 +8,9 @@ This impacted many businesses like airlines or restaurants and they were forced 
 So I am curious about how people's behaviour on taxi and bike usages change since then. 
 
 ## Data Sources:
-[Bike dataset](https://citibikenyc.com/system-data)   
-[Taxi dataset](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)
+This project use two datasets: Citi Bike Trip Histories [Bike dataset](https://citibikenyc.com/system-data) and TLC Trip Record Data [Taxi dataset](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page). Both datasets are recorded in New York city.
+   
+
 
 ## Technologies Used:    
     * Python
