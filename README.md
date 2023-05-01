@@ -36,6 +36,10 @@ Both datasets are recorded in New York city.
 
 [Bike and Taxi Usages in New York from 2019 to 2022](https://lookerstudio.google.com/reporting/472c1e2a-cd34-4eb7-b654-6029288189a0)  
 
+![vehicle use during pandemic](https://github.com/ChungWasawat/dtc_de_project/blob/main/assets/asset3.jpg "Overview")  
+![average duration (bike)](https://github.com/ChungWasawat/dtc_de_project/blob/main/assets/asset4.jpg "bike") 
+![average duration (taxi)](https://github.com/ChungWasawat/dtc_de_project/blob/main/assets/asset5.jpg "taxi") 
+
 
 ### Special Thanks:
 I would like to thank [DataTalks.Club](https://github.com/DataTalksClub/data-engineering-zoomcamp) for creating this course. 
